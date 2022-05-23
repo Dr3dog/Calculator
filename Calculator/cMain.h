@@ -10,8 +10,8 @@ public:
 public:
 	int nHeight = 4;
 	int nWidth = 5;
-	wxButton** btn;
-
+	wxButton** btn = nullptr;
+	wxTextCtrl *m_txt1 = nullptr;
 	void OnButtonClicked(wxCommandEvent& evt);
 
 	wxDECLARE_EVENT_TABLE();

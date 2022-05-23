@@ -1,25 +1,41 @@
 #include "cMain.h"
+#include <string>
+
+using namespace std;
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 EVT_BUTTON(10001, OnButtonClicked)
 wxEND_EVENT_TABLE()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(800, 600)) {
 	// = new wxButton(this, 10001, "1", wxPoint(25, 100), wxSize(75, 75));
-	//m_txt1 = new wxTextCtrl(this, wxID_ANY, "text box", wxPoint(25, 10), wxSize(725, 75));
+	m_txt1 = new wxTextCtrl(this, wxID_ANY, "text box", wxPoint(25, 25), wxSize(725, 75));
 	btn = new wxButton * [nWidth * nHeight];
-	wxGridSizer* grid = new wxGridSizer(nWidth, nHeight, 0, 0);
-
-	for (size_t x = 0; x < nWidth; x++)
+	int numberButtons = 0;
+	int funcIndex = 0;
+	string funcButtons[10] = {"Mod","Bin","Hex","Dec","C","+","-","*","/","="};
+	for (size_t x = 0; x < nWidth; x++, numberButtons++)
 	{
 		for (size_t y = 0; y < nHeight; y++)
 		{
-			btn[y * nWidth + x] = new wxButton(this, 100 + (y*nWidth +x));
-			grid->Add(btn[y * nWidth + x], 1, wxEXPAND | wxALL);
+			int xCoords = 25 + (155 * x);
+			int yCoords = 125 * (y + 1);
+			if (y == 0)
+			{
+				string label = to_string(numberButtons);
+				btn[y * nWidth + x] = new wxButton(this, 100 + (y * nWidth + x), label, wxPoint(xCoords, yCoords), wxSize(100, 50));
+			}
+			else if (y == 1)
+			{
+				string label = to_string(numberButtons + 5);
+				btn[y * nWidth + x] = new wxButton(this, 100 + (y * nWidth + x), label, wxPoint(xCoords, yCoords), wxSize(100, 50));
+			}
+			else
+			{
+				btn[y * nWidth + x] = new wxButton(this, 100 + (y * nWidth + x), funcButtons[funcIndex], wxPoint(xCoords, yCoords), wxSize(100, 50));
+				funcIndex++;
+			}
 		}
 	}
-
-	this->SetSizer(grid);
-	grid->Layout();
 }
 
 cMain::~cMain() {
