@@ -47,13 +47,7 @@ void cMain::OnButtonClicked(wxCommandEvent& evt) {
 	//gets coords of the button
 	int x = (evt.GetId() - 100) % nWidth;
 	int y = (evt.GetId() - 100) / nWidth;
-	if (y == 0)
-	{
-		m_txt1->AppendText(btn[x - y]->GetLabel());
-	}
-	else if (y ==1)
-	{
-		m_txt1->AppendText(btn[x - y + 6]->GetLabel());
-	}
+	int index = y * nWidth + x;
+	m_txt1->AppendText(btn[index]->GetLabel());
 	evt.Skip();
 }
