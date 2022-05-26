@@ -8,7 +8,7 @@ wxEND_EVENT_TABLE()
 
 cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSize(800, 600)) {
 	// = new wxButton(this, 10001, "1", wxPoint(25, 100), wxSize(75, 75));
-	m_txt1 = new wxTextCtrl(this, wxID_ANY, "text box", wxPoint(25, 25), wxSize(725, 75));
+	m_txt1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(25, 25), wxSize(725, 75));
 	btn = new wxButton * [nWidth * nHeight];
 	int numberButtons = 0;
 	int funcIndex = 0;
@@ -34,15 +34,20 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 				btn[y * nWidth + x] = new wxButton(this, 100 + (y * nWidth + x), funcButtons[funcIndex], wxPoint(xCoords, yCoords), wxSize(100, 50));
 				funcIndex++;
 			}
+				btn[y * nWidth + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
 		}
 	}
 }
 
 cMain::~cMain() {
-
+	delete[] btn;
 }
 
 void cMain::OnButtonClicked(wxCommandEvent& evt) {
-
+	//gets coords of the button
+	int x = (evt.GetId() - 100) % nWidth;
+	int y = (evt.GetId() - 100) / nWidth;
+	int index = y * nWidth + x;
+	m_txt1->AppendText(btn[index]->GetLabel());
 	evt.Skip();
 }
