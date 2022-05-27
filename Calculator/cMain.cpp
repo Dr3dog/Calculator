@@ -1,6 +1,6 @@
 #include "cMain.h"
 #include <string>
-
+#include "ButtonFactory.h"
 using namespace std;
 wxBEGIN_EVENT_TABLE(cMain, wxFrame)
 EVT_BUTTON(10001, OnButtonClicked)
@@ -10,9 +10,43 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 	// = new wxButton(this, 10001, "1", wxPoint(25, 100), wxSize(75, 75));
 	m_txt1 = new wxTextCtrl(this, wxID_ANY, "", wxPoint(25, 25), wxSize(725, 75));
 	btn = new wxButton * [nWidth * nHeight];
-	int numberButtons = 0;
+	wxString funcButtons[10] = { "Mod","Bin","Hex","Dec","C","+","-","*","/","=" };
+	ButtonFactory testing(this,nWidth);
+	int x = 0;
+	int y = 0;
+	for (size_t i = 0; i < 10; i++)
+	{
+		btn[y * nWidth + x] = testing.CreateNumberButtons(i, x, y);
+		btn[y * nWidth + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
+		if (x == 4)
+		{
+			y++;
+			x = 0;
+		}
+		else
+		{
+			x++;
+		}
+	}
+	y = 2;
+	x = 0;
+	for (size_t j = 0; j < 10; j++)
+	{
+		btn[y * nWidth + x] = testing.CreateFunctionNumber(funcButtons, j, x, y);
+		btn[y * nWidth + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
+		if (x == 4)
+		{
+			y++;
+			x = 0;
+		}
+		else
+		{
+			x++;
+		}
+	}
+	/*int numberButtons = 0;
 	int funcIndex = 0;
-	string funcButtons[10] = {"Mod","Bin","Hex","Dec","C","+","-","*","/","="};
+	string funcButtons[10] = { "Mod","Bin","Hex","Dec","C","+","-","*","/","=" };
 	for (size_t x = 0; x < nWidth; x++, numberButtons++)
 	{
 		for (size_t y = 0; y < nHeight; y++)
@@ -34,9 +68,10 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 				btn[y * nWidth + x] = new wxButton(this, 100 + (y * nWidth + x), funcButtons[funcIndex], wxPoint(xCoords, yCoords), wxSize(100, 50));
 				funcIndex++;
 			}
-				btn[y * nWidth + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
+			btn[y * nWidth + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
+
 		}
-	}
+	}*/
 }
 
 cMain::~cMain() {
