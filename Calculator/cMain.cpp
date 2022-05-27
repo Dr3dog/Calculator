@@ -69,6 +69,7 @@ cMain::cMain() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(30, 30), wxSiz
 				funcIndex++;
 			}
 			btn[y * nWidth + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &cMain::OnButtonClicked, this);
+
 		}
 	}*/
 }
