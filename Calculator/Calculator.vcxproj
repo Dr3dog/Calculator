@@ -20,11 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ButtonFactory.h" />
+    <ClInclude Include="ButtonProcesses.h" />
     <ClInclude Include="cApp.h" />
     <ClInclude Include="cMain.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ButtonFactory.cpp" />
+    <ClCompile Include="ButtonProcesses.cpp" />
     <ClCompile Include="cApp.cpp" />
     <ClCompile Include="cMain.cpp" />
   </ItemGroup>
